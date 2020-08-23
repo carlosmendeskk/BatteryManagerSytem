@@ -17,7 +17,7 @@ def _get_params(param_name, min_value, max_value, default_value):
     if rospy.has_param(param_name):
         tmp = rospy.get_param(param_name)
         if (tmp < min_value) or (tmp > max_value):
-            rospy.logwarn("Defined value for " + param_name + " out of bounds! Using " + default_value)
+            rospy.logwarn("Defined value for " + param_name + " out of bounds! Using " + str(default_value))
             value = default_value
         else:
             value = tmp

@@ -27,7 +27,9 @@ based on the elapsed time.
 
 ## How to run:
 
-### Software requirements:
+### Prerequisite:
+
+The package was developed with the following setup:
 
 >**Distributor ID:**	*Ubuntu*
 
@@ -50,7 +52,23 @@ $ catkin_make
 
 There are multiple ways to launch the simulation. 
 
-**Launch Files**:
+**Launch Files and params**:
+
+ - *Robot Launch Params*:
+  
+| Name                  	| Min Value 	| Max Value 	| default value 	|
+|-----------------------	|-----------	|-----------	|---------------	|
+| discharge_rate  [%/min]  	| 1.0       	| 58.82     	| 58.82         	|
+| initial_battery_level [%] | 0.0       	| 100.0     	| 100           	|
+| charge_rate [%/min]      	| 1.0       	| 100.0     	| 100           	|
+---
+ - *Manager Launch Params*:
+  
+| Name                  	| Min Value 	| Max Value 	| default value 	|
+|-----------------------	|-----------	|-----------	|---------------	|
+| print_interval_seconds   	| 1.0       	| 60        	| 1.0           	|
+
+--- 
 -  simulation.launch - Spawns the manager node and two robots.
 -  manager.launch - Spawn the manager node. 
 -  robot.launch - Spawns a robot node. 

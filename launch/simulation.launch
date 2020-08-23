@@ -6,7 +6,7 @@
     </include>
 
     <!-- Robot1 -->
-    <arg name="dischargeRateArg1" default="10" />
+    <arg name="dischargeRateArg1" default="100" />
     <arg name="initialChargeArg1" default="100"/>
     <arg name="chargeRateArg1"    default="10" />
     <include file="$(find robots)/launch/robot.launch" >
