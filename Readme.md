@@ -8,12 +8,12 @@ ROS Package that simulates a battery manager system for a fleet of robots.
 ---
 ![Alt text](doc/diagram.png?raw=true "Manager Robot interfaces")
 
-The goal for this project is to create a manager system that deals with several robots. To fulfil this, two type of nodes were created: 
+The goal for this project is to create a manager system that deals with several robots. To accomplish this, two type of nodes were created: 
 - **Manager Node**
  
 - **Robot Node**   
 
-These two type of nodes communicate via two types of services:
+These two type of nodes communicate via two services:
 - **Register Service**:
   - Service provided by the **Manager node** used to register a specific robot in the Manager list. 
 
@@ -43,7 +43,7 @@ The package was developed with the following setup:
 
 ```sh
 $ mkdir -p ~/robot_ws/src && cd ~/robot_ws/src/
-$ git clone git@github.com:carlosmendeskk/BatteryManagerSytem.git robots
+$ git clone https://github.com/carlosmendeskk/robots.git robots
 $ cd ~/robot_ws/
 $ catkin_make
 ```
@@ -70,8 +70,14 @@ There are multiple ways to launch the simulation.
 
 --- 
 -  simulation.launch - Spawns the manager node and two robots.
--  manager.launch - Spawn the manager node. 
--  robot.launch - Spawns a robot node. 
+-  manager.launch - Spawns only the manager node.
+-  robot.launch - Spawns only a robot node. It can be spawned multiple times.
+
+**Running the simulation.launch**:
+```
+$ source ~/robot_ws/devel/setup.bash
+$ roslaunch robots simulation.launch
+```
 
 **Notes**:
 > :warning: When launching the robot, ensure that the manager node is running. If the manager Register service is not running, the robot node will only wait 5 seconds until it stops.
@@ -79,10 +85,6 @@ There are multiple ways to launch the simulation.
 > :warning: If manager node is dies, the robot nodes will all stop operation.
 
 > :warning: **Maximum number of robots connected to Manager**: Currently is 10!
-```
-$ source devel/setup.bash
-$ roslaunch robots simulation.launch
-```
 
 
 ### Example Output:

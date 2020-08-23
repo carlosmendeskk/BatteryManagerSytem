@@ -6,18 +6,18 @@
     </include>
 
     <!-- Robot1 -->
-    <arg name="dischargeRateArg1" default="100" />
-    <arg name="initialChargeArg1" default="100"/>
-    <arg name="chargeRateArg1"    default="10" />
+    <arg name="dischargeRateArg1" default="58.82" />
+    <arg name="initialChargeArg1" default="100.0"/>
+    <arg name="chargeRateArg1"    default="10.0" />
     <include file="$(find robots)/launch/robot.launch" >
     <arg name="dischargeRateArg" value="$(arg dischargeRateArg1)" />
     <arg name="initialChargeArg" value="$(arg initialChargeArg1)" />
     <arg name="chargeRateArg"    value="$(arg chargeRateArg1)"  />
     </include>
     <!-- Robot2 -->
-    <arg name="dischargeRateArg2" default="10" />
-    <arg name="initialChargeArg2" default="100" />
-    <arg name="chargeRateArg2"    default="10"  />
+    <arg name="dischargeRateArg2" default="58.82" />
+    <arg name="initialChargeArg2" default="100.0" />
+    <arg name="chargeRateArg2"    default="10.0"  />
     <include file="$(find robots)/launch/robot.launch" >
     <arg name="dischargeRateArg" value="$(arg dischargeRateArg2)" />
     <arg name="initialChargeArg" value="$(arg initialChargeArg2)" />
