@@ -60,7 +60,7 @@ class Robot:
 
     def init(self):
         """ Initialize object """
-        rospy.wait_for_service("manage_operation", timeout=rospy.Duration(1))
+        rospy.wait_for_service("manage_operation", timeout=rospy.Duration(5))
         rospy.loginfo("Found manager service!")
         rospy.on_shutdown(self.stop)
         self._connection_service = rospy.ServiceProxy('manage_operation', srv.Register, persistent=True)
