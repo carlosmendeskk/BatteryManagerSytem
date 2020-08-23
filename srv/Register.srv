@@ -1,0 +1,9 @@
+# This service is used to connect and disconnect the manager and vehicles
+# Request
+uint8 CONNECT = 0       # Vehicle requests connection
+uint8 DISCONNECT = 1    # Vehicle requests disconnection
+
+uint8 command           # Request command. Values defined above
+---
+# Response
+bool success            # Set this to true if the request is successful
