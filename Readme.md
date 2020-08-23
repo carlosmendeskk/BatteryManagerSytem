@@ -25,9 +25,6 @@ based on the elapsed time.
 
 ![Alt text](doc/RobotBattery.png?raw=true "Robot Battery")
 
-### **Notes**:
-    Currently the maximum number of allowed robots is 10.
-
 ## How to run:
 
 ### Software requirements:
@@ -59,9 +56,11 @@ There are multiple ways to launch the simulation.
 -  robot.launch - Spawns a robot node. 
 
 **Notes**:
-- When launching the robot, ensure that the manager node is running. If the manager Register service is not running, the robot node will only wait 5 seconds until it stops.
-- If manager node is dies, the robot nodes will all stop operation.
-- 
+> :warning: When launching the robot, ensure that the manager node is running. If the manager Register service is not running, the robot node will only wait 5 seconds until it stops.
+
+> :warning: If manager node is dies, the robot nodes will all stop operation.
+
+> :warning: **Maximum number of robots connected to Manager**: Currently is 10!
 ```
 $ source devel/setup.bash
 $ roslaunch robots simulation.launch
@@ -95,7 +94,7 @@ Output for simulation.launch:
 [INFO] [1598210729.017633]: /robot_AV2_19986_562270367572121903: charging current 100.0 %
 ```
 
-### Future Work:
+## Future Work:
 -   Add retry mechanism into robot to reconnect with manager if it gets disconnected.
 -   Extend the Control service to support several type of method ids.
 -   Add state machine to robot class.
