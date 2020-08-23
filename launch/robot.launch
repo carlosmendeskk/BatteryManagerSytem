@@ -1,12 +1,10 @@
-<?xml version="1.0"?>
-<!-- Base -->
 <launch>
-    <arg name="discharge_rate" default="10" />
-    <arg name="initial_charge" default="100" />
-    <arg name="charge_rate"    default="10"  />
+    <arg name="dischargeRateArg" default="10" />
+    <arg name="initialChargeArg" default="100" />
+    <arg name="chargeRateArg"    default="10"  />
     <node pkg="robots" type="robot.py" name = "$(anon robot)" output="screen" >
-        <param name="discharge_rate" value="$(arg discharge_rate)" />
-        <param name="initial_battery_level" value="$(arg initial_charge)" />
-        <param name="charge_rate" value="$(arg charge_rate)" />
+        <param name="discharge_rate" value="$(arg dischargeRateArg)" />
+        <param name="initial_battery_level" value="$(arg initialChargeArg)" />
+        <param name="charge_rate" value="$(arg chargeRateArg)" />
     </node>
 </launch>

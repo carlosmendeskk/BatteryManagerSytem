@@ -17,7 +17,6 @@ class Battery:
         self._last_time_stamp = rospy.get_time()
         # By default the state is charging
         self._battery_state = BatteryState.CHARGING
-        print("This", self._battery_lvl, self._charge_rate, self._discharge_rate)
 
     def __update_battery_level(self):
         """ Sets the battery value """

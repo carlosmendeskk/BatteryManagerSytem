@@ -8,8 +8,22 @@ from robots import srv
 MAX_NR_ROBOTS = 10
 # Battery level which triggers switch
 BATTERY_SWITCH_LEVEL = 10.0
-# Interval in seconds between prints
-PRINT_FREQUENCY = 60
+# Threshold to be applied when comparing time
+THRESHOLD_FLOATING_POINT = 0.1
+
+
+def _get_params(param_name, min_value, max_value, default_value):
+    """ Retrieve and validate params """
+    if rospy.has_param(param_name):
+        tmp = rospy.get_param(param_name)
+        if (tmp < min_value) or (tmp > max_value):
+            rospy.logwarn("Defined value for " + param_name + " out of bounds! Using " + default_value)
+            value = default_value
+        else:
+            value = tmp
+    else:
+        value = default_value
+    return value
 
 
 class Manager:
@@ -17,6 +31,8 @@ class Manager:
     def __init__(self):
         rospy.init_node('manager_node')
         # To avoid racing condition for the list and vehicle execution fifo
+        # Interval in seconds between prints
+        self._print_time_interval = _get_params("~print_interval_seconds", 1, 60, 1)
         # a mutex is required
         self._lock = threading.Lock()
         # List containing the robot ids
@@ -89,7 +105,7 @@ class Manager:
     def __should_print(self):
         """ Function that checks if print is to be done """
         current_time = rospy.get_time()
-        if (current_time - self._last_print_stamp) >= PRINT_FREQUENCY:
+        if (current_time - self._last_print_stamp) >= (self._print_time_interval - THRESHOLD_FLOATING_POINT):
             self._last_print_stamp = current_time
             return True
         else:

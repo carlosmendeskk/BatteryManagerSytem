@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
 import rospy
+import rosservice
 from auxiliar_types.battery import Battery, BatteryState
 from robots import srv
+
 
 # Default values
 # Max discharge rate ( max 10 sec to reach dock with 10 percent)
@@ -34,7 +36,7 @@ class Robot:
     def __init__(self):
         # Init node and retrieve
         rospy.init_node('robot_node', anonymous=True)
-        s = rospy.Service(rospy.get_name() + "_control_sv", srv.Control, self.__control_api)
+        self._control_sv = rospy.Service(rospy.get_name() + "_control_sv", srv.Control, self.__control_api)
         # variables
         battery_lvl = _get_params("~initial_battery_level",
                                   min_value=0.0,
@@ -62,6 +64,7 @@ class Robot:
         rospy.loginfo("Found manager service!")
         rospy.on_shutdown(self.stop)
         self._connection_service = rospy.ServiceProxy('manage_operation', srv.Register, persistent=True)
+
         command = srv.RegisterRequest.CONNECT
 
         if self._connection_service(command) is False:
@@ -69,13 +72,27 @@ class Robot:
         else:
             rospy.loginfo("Connection successful!")
 
+    def __is_service_alive(self):
+        """ This function checks if the required manager service is still alive """
+        if self._connection_service.resolved_name in rosservice.get_service_list():
+            return True
+        else:
+            return False
+
     def run(self):
-        while rospy.is_shutdown() is False:
+        """ Robot main function. Currently no action is needed apart from service integrity check."""
+        while (rospy.is_shutdown() is False) and \
+                (self.__is_service_alive() is True):
             rospy.sleep(1)
 
     def stop(self):
-        command = srv.RegisterRequest.DISCONNECT
-        success = self._connection_service(command)
+        """ Stops robot. Requests disconnect if the service is active. """
+        if self.__is_service_alive():
+            command = srv.RegisterRequest.DISCONNECT
+            self._connection_service(command)
+        else:
+            rospy.logerr("Service " + self._connection_service.resolved_name + " is no longer available. "
+                                                                               "Shutting down!")
 
     def __get_state(self):
         """ Retrieves state of the robot. """

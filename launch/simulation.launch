@@ -1,5 +1,26 @@
-<?xml version="1.0"?>
-<!-- Base -->
 <launch>
+    <!-- Manager -->
+    <arg name="printIntervalSecondsArg1" default="1" />
+    <include file="$(find robots)/launch/manager.launch" >
+    <arg name="printIntervalSecondsArg" value="$(arg printIntervalSecondsArg1)" />
+    </include>
 
+    <!-- Robot1 -->
+    <arg name="dischargeRateArg1" default="10" />
+    <arg name="initialChargeArg1" default="100"/>
+    <arg name="chargeRateArg1"    default="10" />
+    <include file="$(find robots)/launch/robot.launch" >
+    <arg name="dischargeRateArg" value="$(arg dischargeRateArg1)" />
+    <arg name="initialChargeArg" value="$(arg initialChargeArg1)" />
+    <arg name="chargeRateArg"    value="$(arg chargeRateArg1)"  />
+    </include>
+    <!-- Robot2 -->
+    <arg name="dischargeRateArg2" default="10" />
+    <arg name="initialChargeArg2" default="100" />
+    <arg name="chargeRateArg2"    default="10"  />
+    <include file="$(find robots)/launch/robot.launch" >
+    <arg name="dischargeRateArg" value="$(arg dischargeRateArg2)" />
+    <arg name="initialChargeArg" value="$(arg initialChargeArg2)" />
+    <arg name="chargeRateArg"    value="$(arg chargeRateArg2)"  />
+    </include>
 </launch>
