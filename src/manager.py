@@ -4,9 +4,12 @@ import threading
 import rospy
 from robots import srv
 
+# Maximum number of robots
 MAX_NR_ROBOTS = 10
-
+# Battery level which triggers switch
 BATTERY_SWITCH_LEVEL = 10.0
+# Interval in seconds between prints
+PRINT_FREQUENCY = 60
 
 
 class Manager:
@@ -74,28 +77,36 @@ class Manager:
                 del self._node_list[caller_id]
         return success
 
-    def __print(self, robot_id, robot_state, sec):
+    def __print(self, robot_id, robot_state):
         """ This function prints a message with sec frequency """
+        printable_mode = "NA"
+        if robot_state.state is srv.ControlResponse.OPERATING:
+            printable_mode = "operating"
+        elif robot_state.state is srv.ControlResponse.IDLE_CHARGING:
+            printable_mode = "charging"
+        rospy.loginfo(robot_id + ": " + printable_mode + " current " + str(robot_state.battery_lvl) + " %")
+
+    def __should_print(self):
+        """ Function that checks if print is to be done """
         current_time = rospy.get_time()
-        if (current_time - self._last_print_stamp) >= sec:
-            printable_mode = "NA"
-
-            if robot_state.state is srv.ControlResponse.OPERATING:
-                printable_mode = "operating"
-            elif robot_state.state is srv.ControlResponse.IDLE_CHARGING:
-                printable_mode = "charging"
-
-            rospy.loginfo(robot_id + ": " + printable_mode + " current " + str(robot_state.battery_lvl) + " %")
+        if (current_time - self._last_print_stamp) >= PRINT_FREQUENCY:
             self._last_print_stamp = current_time
+            return True
+        else:
+            return False
 
     def __update(self):
         """ Here the goal is to request the vehicle status. """
         with self._lock:
             is_robot_operating = False
+            # Check if should print:
+            should_print = self.__should_print()
+
             for key in self._node_list.keys():
                 # Request robot state
                 robot_state = self.__request_state(key)
-                self.__print(robot_id=key, robot_state=robot_state, sec=0)
+                if should_print:
+                    self.__print(robot_id=key, robot_state=robot_state)
                 # Check if action is needed
                 if robot_state.state is srv.ControlResponse.OPERATING:
                     if (robot_state.battery_lvl <= BATTERY_SWITCH_LEVEL) \

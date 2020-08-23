@@ -22,14 +22,16 @@ TODO
 
 >**ROS Distribution:** *Melodic*
 
-### Steps for installation 
+### Install and Run:
 
 ```sh
-$ mkdir -p robot_ws/src && cd robot_ws/src/
-$ git clone git@github.com:carlosmendeskk/BatteryManagerSytem.git
-#$ pip install virtualenv
-#$ virtualenv venv
-#$ source venv/bin/activate
-#$ cd ..
-#$ pip install -r requirements.txt
+$ mkdir -p ~/robot_ws/src && cd ~/robot_ws/src/
+$ git clone git@github.com:carlosmendeskk/BatteryManagerSytem.git robots
+$ cd ~/robot_ws/
+$ catkin_make
+$ source devel/setup.bash
+$ roslaunch robots simulation.launch
 ```
+
+### Example Output:
+The mentioned launch file starts the manager node and 2 robot nodes.
