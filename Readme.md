@@ -82,7 +82,7 @@ $ roslaunch robots simulation.launch
 **Notes**:
 > :warning: When launching the robot, ensure that the manager node is running. If the manager Register service is not running, the robot node will only wait 5 seconds until it stops.
 
-> :warning: If manager node is dies, the robot nodes will all stop operation.
+> :warning: If manager node dies, the robot nodes will all stop operation.
 
 > :warning: **Maximum number of robots connected to Manager**: Currently is 10!
 
